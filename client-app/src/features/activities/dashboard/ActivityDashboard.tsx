@@ -4,25 +4,24 @@ import ActivityList from './ActivityList'
 import { UseStore } from '../../../app/stores/store'
 import { observer } from 'mobx-react-lite'
 import LoadingComponent from '../../../app/layout/LoadingComponent'
+import ActivityFilters from './ActivityFilters'
 
 export default observer(function ActivityDashboard() {
   const { activityStore } = UseStore()
-  const {loadActivities, activityRegistry} = activityStore
+  const { loadActivities, activityRegistry } = activityStore
 
   useEffect(() => {
-    if(activityRegistry.size<=1)
-      loadActivities()
+    if (activityRegistry.size <= 1) loadActivities()
   }, [loadActivities, activityRegistry])
 
-  if (activityStore.loadingInitial)
-    return <LoadingComponent content="Loading app" />
+  if (activityStore.loadingInitial) return <LoadingComponent content='Loading app' />
   return (
     <Grid>
-      <Grid.Column width="10">
+      <Grid.Column width='10'>
         <ActivityList />
       </Grid.Column>
-      <Grid.Column width="6">
-        <h2>Activity filters</h2>
+      <Grid.Column width='6'>
+        <ActivityFilters />
       </Grid.Column>
     </Grid>
   )
