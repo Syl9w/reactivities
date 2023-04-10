@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Button, Form, Segment } from 'semantic-ui-react'
-import { UseStore } from '../../../app/stores/store'
+import { useStore } from '../../../app/stores/store'
 import { observer } from 'mobx-react-lite'
 import { useNavigate, useParams } from 'react-router'
 import { Activity } from '../../../app/models/activity'
@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 
 export default observer(function ActivityForm() {
   const { id } = useParams()
-  const { activityStore } = UseStore()
+  const { activityStore } = useStore()
   const { loading, createActivity, updateActivity, loadActivity, loadingInitial } = activityStore
 
   const navigate = useNavigate()

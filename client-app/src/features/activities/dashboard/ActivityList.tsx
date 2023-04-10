@@ -1,11 +1,11 @@
 import { Header } from 'semantic-ui-react'
-import { UseStore } from '../../../app/stores/store'
+import { useStore } from '../../../app/stores/store'
 import { observer } from 'mobx-react-lite'
 import ActivityListItem from './ActivityListItem'
 import { Fragment } from 'react'
 
 export default observer(function ActivityList() {
-  const { activityStore } = UseStore()
+  const { activityStore } = useStore()
   const { groupedActivities } = activityStore
 
   return (
