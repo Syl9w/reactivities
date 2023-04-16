@@ -1,10 +1,7 @@
 using Domain;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Application.Activities;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
-using Application.Core;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
