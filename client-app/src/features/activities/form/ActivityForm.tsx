@@ -3,7 +3,7 @@ import { Button, Header, Segment } from 'semantic-ui-react'
 import { useStore } from '../../../app/stores/store'
 import { observer } from 'mobx-react-lite'
 import { useNavigate, useParams } from 'react-router'
-import { Activity } from '../../../app/models/activity'
+import { ActivityFormValues } from '../../../app/models/activity'
 import LoadingComponent from '../../../app/layout/LoadingComponent'
 import { v4 as uuid } from 'uuid'
 import { Link } from 'react-router-dom'
@@ -18,19 +18,11 @@ import CustomDateInput from '../../../app/common/form/CustomDateInput'
 export default observer(function ActivityForm() {
   const { id } = useParams()
   const { activityStore } = useStore()
-  const { loading, createActivity, updateActivity, loadActivity, loadingInitial } = activityStore
+  const { createActivity, updateActivity, loadActivity, loadingInitial } = activityStore
 
   const navigate = useNavigate()
 
-  const [activity, setActivity] = useState<Activity>({
-    id: '',
-    title: '',
-    category: '',
-    description: '',
-    date: null,
-    city: '',
-    venue: '',
-  })
+  const [activity, setActivity] = useState<ActivityFormValues>(new ActivityFormValues())
 
   const activitySchema = Yup.object().shape({
     title: Yup.string().required('The activity title is required'),
@@ -42,10 +34,10 @@ export default observer(function ActivityForm() {
   })
 
   useEffect(() => {
-    if (id) loadActivity(id).then((activity) => setActivity(activity!))
+    if (id) loadActivity(id).then((activity) => setActivity(new ActivityFormValues(activity)))
   }, [id, loadActivity])
 
-  function handleFormSubmit(activity: Activity) {
+  function handleFormSubmit(activity: ActivityFormValues) {
     if (activity.id) updateActivity(activity).then(() => navigate(`/activities/${activity.id}`))
     else {
       activity.id = uuid()
@@ -61,7 +53,7 @@ export default observer(function ActivityForm() {
       <Formik
         enableReinitialize
         initialValues={activity}
-        onSubmit={handleFormSubmit}
+        onSubmit={values => handleFormSubmit(values)}
         validationSchema={activitySchema}
       >
         {({ handleSubmit, isValid, isSubmitting, dirty }) => (
@@ -83,7 +75,7 @@ export default observer(function ActivityForm() {
             <CustomTextInput placeholder='Venue' name='venue' />
             <Button
               disabled={isSubmitting || !isValid || !dirty}
-              loading={loading}
+              loading={isSubmitting}
               floated='right'
               positive
               type='submit'

@@ -32,8 +32,8 @@ namespace Persistence.Migrations
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     DisplayName = table.Column<string>(type: "TEXT", nullable: true),
                     Bio = table.Column<string>(type: "TEXT", nullable: true),
-                    UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    Username = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    NormalizedUsername = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
@@ -190,9 +190,9 @@ namespace Persistence.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
+                name: "UsernameIndex",
                 table: "AspNetUsers",
-                column: "NormalizedUserName",
+                column: "NormalizedUsername",
                 unique: true);
         }
 

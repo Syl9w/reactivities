@@ -105,7 +105,7 @@ namespace Persistence.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("NormalizedUserName")
+                    b.Property<string>("NormalizedUsername")
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
@@ -124,7 +124,7 @@ namespace Persistence.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Username")
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
@@ -133,9 +133,9 @@ namespace Persistence.Migrations
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
-                    b.HasIndex("NormalizedUserName")
+                    b.HasIndex("NormalizedUsername")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex");
+                        .HasDatabaseName("UsernameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
