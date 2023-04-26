@@ -69,6 +69,7 @@ export default class ProfileStore {
           this.profile.photos.find((p) => p.isMain)!.isMain = false
           this.profile.photos.find((p) => p.id === photo.id)!.isMain = true
           this.profile.image = photo.url
+          store.activityStore.updateAttendeeImage(this.profile.userName, photo.url)
           this.loadingPhoto = false
         }
       })

@@ -176,4 +176,19 @@ export default class ActivityStore {
       runInAction(()=>this.loading = false)
     }
   }
+
+  updateAttendeeImage = (username:string, url:string) => {
+    this.activityRegistry.forEach((activity)=>{
+      var attendee = activity.attendees.find(a=>a.userName===username)
+      if(attendee){
+        attendee.image=url
+        activity.attendees = [...activity.attendees.filter((a)=>a.userName!==username),attendee]
+        if(activity.host?.userName===username){
+          activity.host.image=url
+        }
+      }
+    })
+
+    
+  }
 }
