@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import { router } from '../router/Routes'
 import { store } from '../stores/store'
 import { User, UserFormValues } from '../models/user'
+import { Photo, Profile } from '../models/profile'
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -74,9 +75,10 @@ const Activities = {
   list: () => request.get<Activity[]>('/activities'),
   details: (id: string) => request.get<Activity>(`/activities/${id}`),
   create: (activity: ActivityFormValues) => request.post<void>('/activities', activity),
-  update: (activity: ActivityFormValues) => request.put<void>(`/activities/${activity.id}`, activity),
+  update: (activity: ActivityFormValues) =>
+    request.put<void>(`/activities/${activity.id}`, activity),
   delete: (id: string) => request.del<void>(`/activities/${id}`),
-  attend: (id: string) => request.post<void>(`/activities/${id}/attend`, {})
+  attend: (id: string) => request.post<void>(`/activities/${id}/attend`, {}),
 }
 
 const Account = {
@@ -85,9 +87,25 @@ const Account = {
   register: (user: UserFormValues) => request.post<User>('/account/register', user),
 }
 
+const Profiles = {
+  get: (username: string) => request.get<Profile>(`/profiles/${username}`),
+  uploadPhoto: (file: any) => {
+    let formData = new FormData()
+    formData.append('File', file)
+    return axios.post<Photo>('photos', formData, {
+      headers: {
+        'Content-Type': 'multypart/form-data',
+      },
+    })
+  },
+  setMainPhoto: (id:string) => request.put<void>(`/photos/${id}/setmain`,{}),
+  deletePhoto: (id:string) => request.del<void>(`/photos/${id}`)
+}
+
 const agent = {
   Activities,
   Account,
+  Profiles,
 }
 
 export default agent

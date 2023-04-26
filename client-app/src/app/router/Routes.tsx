@@ -7,6 +7,7 @@ import TestErrors from '../../features/errors/TestErrors'
 import NotFound from '../../features/errors/NotFound'
 import ServerError from '../../features/errors/ServerError'
 import LoginForm from '../../features/users/LoginForm'
+import ProfilePage from '../../features/profiles/profilePage'
 
 export const routes: RouteObject[] = [
   {
@@ -43,7 +44,11 @@ export const routes: RouteObject[] = [
       },
       {
         path: 'server-error',
-        element: <ServerError/>
+        element: <ServerError />
+      },
+      {
+        path: 'profiles/:username',
+        element: <ProfilePage />
       },
       {
         path: '*',
