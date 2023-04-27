@@ -38,7 +38,7 @@ export default class UserStore {
       const user = await agent.Account.current()
       runInAction(() => (this.user = user))
     } catch (error) {
-        console.log(error)
+      console.log(error)
     }
   }
 
@@ -54,7 +54,11 @@ export default class UserStore {
     }
   }
 
-  setImage = (image:string) => {
-    if(this.user) this.user.image = image
+  setImage = (image: string) => {
+    if (this.user) this.user.image = image
+  }
+
+  setDisplayName = (name: string) => {
+    if (this.user) this.user.displayName = name
   }
 }
