@@ -161,34 +161,38 @@ export default class ActivityStore {
     }
   }
 
-  updateCancelation =async () => {
-    this.loading=true
+  updateCancelation = async () => {
+    this.loading = true
     try {
       await agent.Activities.attend(this.selectedActivity!.id)
-      runInAction(()=>{
+      runInAction(() => {
         this.selectedActivity!.isCancelled = !this.selectedActivity!.isCancelled
         this.activityRegistry.set(this.selectedActivity!.id, this.selectedActivity!)
       })
     } catch (error) {
       console.log(error)
-    }
-    finally{
-      runInAction(()=>this.loading = false)
+    } finally {
+      runInAction(() => (this.loading = false))
     }
   }
 
-  updateAttendeeImage = (username:string, url:string) => {
-    this.activityRegistry.forEach((activity)=>{
-      var attendee = activity.attendees.find(a=>a.userName===username)
-      if(attendee){
-        attendee.image=url
-        activity.attendees = [...activity.attendees.filter((a)=>a.userName!==username),attendee]
-        if(activity.host?.userName===username){
-          activity.host.image=url
+  updateAttendeeImage = (username: string, url: string) => {
+    this.activityRegistry.forEach((activity) => {
+      var attendee = activity.attendees.find((a) => a.userName === username)
+      if (attendee) {
+        attendee.image = url
+        activity.attendees = [
+          ...activity.attendees.filter((a) => a.userName !== username),
+          attendee,
+        ]
+        if (activity.host?.userName === username) {
+          activity.host.image = url
         }
       }
     })
+  }
 
-    
+  clearSelectedActivity = () => {
+    this.selectedActivity = undefined
   }
 }
