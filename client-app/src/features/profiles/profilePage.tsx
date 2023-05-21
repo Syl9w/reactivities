@@ -7,14 +7,15 @@ import { useParams } from 'react-router'
 import { useEffect } from 'react'
 import LoadingComponent from '../../app/layout/LoadingComponent'
 
-interface Props {}
-
 export default observer(function ProfilePage() {
   const { profileStore } = useStore()
   const { username } = useParams<{ username: string }>()
 
   useEffect(() => {
     profileStore.loadProfile(username!)
+    return () => {
+      profileStore.setActiveTab(0)
+    }
   }, [username, profileStore])
 
   if (profileStore.loadingProfile) return <LoadingComponent content='Loading a profile...' />

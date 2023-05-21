@@ -17,7 +17,7 @@ export default observer(function RegisterForm() {
         }
         validationSchema={Yup.object({
           displayName: Yup.string().required(),
-          Username: Yup.string().required(),
+          userName: Yup.string().required(),
           email: Yup.string().required(),
           password: Yup.string().required(),
         })}
@@ -36,10 +36,10 @@ export default observer(function RegisterForm() {
               )}
             />
             <Button
-              disabled={!isValid || !dirty || isSubmitting}
+              disabled={!isValid || !dirty || isSubmitting} 
               loading={isSubmitting}
               positive
-              content='register'
+              content='Register'
               type='submit'
               fluid
             />

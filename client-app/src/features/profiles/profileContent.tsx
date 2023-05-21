@@ -3,12 +3,15 @@ import { Tab } from 'semantic-ui-react'
 import { Profile } from '../../app/models/profile'
 import ProfilePhotos from './profilePhotos'
 import ProfileAbout from './profileAbout'
+import ProfileFollowings from './profileFollowings'
+import { useStore } from '../../app/stores/store'
 
 interface Props {
-  profile: Profile 
+  profile: Profile
 }
 
-export default observer(function ProfileContent({profile}:Props) {
+export default observer(function ProfileContent({ profile }: Props) {
+  const {profileStore} = useStore()
   const panes = [
     {
       menuItem: 'About',
@@ -16,7 +19,7 @@ export default observer(function ProfileContent({profile}:Props) {
     },
     {
       menuItem: 'Photos',
-      render: () => <ProfilePhotos profile={profile}/>,
+      render: () => <ProfilePhotos profile={profile} />,
     },
     {
       menuItem: 'Events',
@@ -24,13 +27,20 @@ export default observer(function ProfileContent({profile}:Props) {
     },
     {
       menuItem: 'Followers',
-      render: () => <Tab.Pane>Followers Content</Tab.Pane>,
+      render: () => <ProfileFollowings/>,
     },
     {
       menuItem: 'Following',
-      render: () => <Tab.Pane>Following Content</Tab.Pane>,
+      render: () => <ProfileFollowings />,
     },
   ]
 
-  return <Tab menu={{ fluid: true, vertical: true }} menuPosition='right' panes={panes} />
+  return (
+    <Tab
+      menu={{ fluid: true, vertical: true }}
+      menuPosition='right'
+      panes={panes}
+      onTabChange={(e, data) => {profileStore.setActiveTab(data.activeIndex)}}
+    />
+  )
 })
